@@ -17,7 +17,7 @@ public class StudentServiceImp implements StudentService {
     }
     @Override
     public Student saveStudent(Student student){
-        return null;
+        return studentRepository.save(student);
     }
     @Override
     public Student getStudentById(Long id){
@@ -29,6 +29,14 @@ public class StudentServiceImp implements StudentService {
     }
     @Override
     public void deleteStudentById(Long id){
-        System.out.println("hello");
+        boolean exists = studentRepository.
+                findById(id).isPresent();
+                if(!exists){
+                     new IllegalStateException
+                            ("Student with " + id + " not found");
+                }
+
+
+        studentRepository.deleteById(id);
     }
 }
