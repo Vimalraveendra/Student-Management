@@ -1,6 +1,7 @@
 package com.example.studentmanagementsystem.studentServiceImp;
 
 import com.example.studentmanagementsystem.entity.Student;
+import com.example.studentmanagementsystem.exception.StudentNotFoundException;
 import com.example.studentmanagementsystem.repository.StudentRepository;
 import com.example.studentmanagementsystem.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,19 +22,18 @@ public class StudentServiceImp implements StudentService {
     }
     @Override
     public Student getStudentById(Long id){
-        return null;
+        return studentRepository.findById(id).get();
     }
     @Override
     public Student updateStudent(Student student){
-        return null;
+       return null;
     }
     @Override
     public void deleteStudentById(Long id){
         boolean exists = studentRepository.
                 findById(id).isPresent();
                 if(!exists){
-                     new IllegalStateException
-                            ("Student with " + id + " not found");
+                     new StudentNotFoundException("Student with " + id + " not found");
                 }
 
 

@@ -29,6 +29,17 @@ public class StudentController {
             studentServiceImp.saveStudent(student);
             return "redirect:/students";
     }
+
+    @GetMapping("/students/edit/{id}")
+    public String editExistingStudentForm(
+            @PathVariable Long id,
+            Model model
+    ){
+        Student student =studentServiceImp.getStudentById(id);
+        model.addAttribute("student",student);
+
+        return "edit_student";
+    }
     @GetMapping("/students/{id}")
     public String deleteStudent(@PathVariable Long id){
         System.out.println("id " + id);
