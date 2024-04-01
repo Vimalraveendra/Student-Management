@@ -37,8 +37,17 @@ public class StudentController {
     ){
         Student student =studentServiceImp.getStudentById(id);
         model.addAttribute("student",student);
-
         return "edit_student";
+    }
+    @PostMapping("/students/{id}")
+    public String UpdateStudent(@PathVariable Long id ,@ModelAttribute("student") Student student){
+        Student existingStudent = studentServiceImp.getStudentById(id);
+                 existingStudent.setStudentId(id);
+         existingStudent.setFirstName(student.getFirstName());
+         existingStudent.setLastName(student.getLastName());
+         existingStudent.setEmail(student.getEmail());
+        studentServiceImp.updateStudent(existingStudent);
+        return "redirect:/students";
     }
     @GetMapping("/students/{id}")
     public String deleteStudent(@PathVariable Long id){
